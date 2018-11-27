@@ -87,7 +87,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
@@ -105,7 +105,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getLastname(): string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
@@ -123,7 +123,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -256,7 +256,7 @@ class User implements UserInterface
 
     public function __toString()
     {
-        return $this->getLastname() . " " . $this->getFirstname();
+        return $this->getFirstname();
     }
 
 

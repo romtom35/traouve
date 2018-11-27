@@ -127,5 +127,10 @@ class Category
         $this->traobject = $traobject;
     }
 
+    public function __toString()
+    {
+        return $this->getLabel();
+    }
+
 
 }
