@@ -4,6 +4,8 @@ namespace App\Controller;
 
 
 use App\Entity\Category;
+use App\Entity\State;
+use App\Entity\Traobject;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,10 +20,38 @@ class CategoryController extends BaseController
      */
     public function show(Category $category)
     {
-
-
+        $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
+        $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
+        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCategory($category, $stateLost, 4);
+        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCategory($category, $stateFound, 4);
         return $this->render('category/show.html.twig', [
-            'category' => $category
+            'category' => $category,
+            'traobjectLosts' => $traobjectLosts,
+            'traobjectFounds' => $traobjectFounds,
+        ]);
+    }
+    /**
+     * @Route("/showlost/{id}", name="category_show_lost")
+     */
+    public function showLost(Category $category)
+    {
+        $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
+        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCategory($category, $stateLost, 99);
+        return $this->render('category/showlost.html.twig', [
+            'category' => $category,
+            'traobjectLosts' => $traobjectLosts
+        ]);
+    }
+    /**
+     * @Route("/showfound/{id}", name="category_show_found")
+     */
+    public function showFound(Category $category)
+    {
+        $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
+        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCategory($category, $stateFound, 99);
+        return $this->render('category/showfound.html.twig', [
+            'category' => $category,
+            'traobjectFounds' => $traobjectFounds
         ]);
     }
 

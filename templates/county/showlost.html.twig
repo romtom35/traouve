@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ county.label }}{% endblock %}
+{% block recherche %}
+    {% include 'default/header.html.twig' %}
+{% endblock %}
+{% block body %}
+    <div class="container mt-5">
+        <h1>Département : {{ county.label }}</h1>
+<h2>Liste des objets perdus</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Image</th>
+                <th>Perdu le</th>
+                <th>Ville</th>
+                <th>Catégorie</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for traobjectLost in traobjectLosts %}
+                <tr>
+                    <td>{{ traobjectLost.title }}</td>
+                    <td><img class="thumbnail" src="{{ asset('uploads/' ~ traobjectLost.picture)}}" alt="{{ traobjectLost.category.label }}"></td>
+                    <td>{{ traobjectLost.eventAt|date('d/m/Y') }}</td>
+                    <td>{{ traobjectLost.city }}</td>
+                    <td>{{ traobjectLost.category.label }}</td>
+                    <td class="d-flex justify-content-between">
+                        <a class="btn btn-primary mr-3" href="{{ path('traobject_show', {'id': traobjectLost.id}) }}">Voir</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">Aucun objet perdu</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

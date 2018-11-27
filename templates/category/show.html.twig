@@ -5,13 +5,33 @@
 {% endblock %}
 {% block body %}
     <div class="container">
-        <h2>Les objets perdus de la catégorie : {{ category.label }}</h2>
+        <h1>Catégorie : {{ category.label }}</h1>
+        <h2>Les derniers objets perdus :</h2>
         <section class="row">
-            {% for traobject in category.traobject %}
+                {% for traobjectLost in traobjectLosts %}
+                    <article class="col-md-3">
+                        {% include 'traobject/card.html.twig' with {'traobject': traobjectLost} only %}
+                    </article>
+                {% else %}
+                    <p>Aucun objet perdu</p>
+                {% endfor %}
+            {% if traobjectLosts %}
+                <a href="{{ path('category_show_lost', {'id':category.id}) }}">Voir tous les objets perdus de la catégorie</a>
+            {% endif %}
+        </section>
+        <h2>Les derniers objets trouvés :</h2>
+        <section class="row">
+            {% for traobjectFound in traobjectFounds %}
                 <article class="col-md-3">
-                    {% include 'traobject/card.html.twig' with {'traobject': traobject} only %}
+                    {% include 'traobject/card.html.twig' with {'traobject': traobjectFound} only %}
                 </article>
+            {% else %}
+                <p>Aucun objet trouvé</p>
             {% endfor %}
+            {% if traobjectFounds %}
+                <a href="{{ path('category_show_found', {'id':category.id}) }}">Voir tous les objets trouvés de la catégorie</a>
+            {% endif %}
         </section>
     </div>
+
 {% endblock %}

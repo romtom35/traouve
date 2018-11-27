@@ -1,36 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des objets trouvé{% endblock %}
+{% block title %}{{ county.label }}{% endblock %}
 {% block recherche %}
     {% include 'default/header.html.twig' %}
 {% endblock %}
 {% block body %}
     <div class="container mt-5">
-        <h1>Liste des objets trouvé</h1>
-
+        <h1>Département : {{ county.label }}</h1>
+<h2>Liste des objets trouvés</h2>
         <table class="table">
             <thead>
             <tr>
                 <th>Titre</th>
                 <th>Image</th>
                 <th>Trouvé le</th>
-                <th>Catégorie</th>
                 <th>Ville</th>
-                <th>Département</th>
+                <th>Catégorie</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for traobject in traobjects %}
+            {% for traobjectFound in traobjectFounds %}
                 <tr>
-                    <td>{{ traobject.title }}</td>
-                    <td><img class="thumbnail" src="{{ asset('uploads/' ~ traobject.picture)}}" alt="{{ traobject.category.label }}"></td>
-                    <td>{{ traobject.eventAt|date('d/m/Y') }}</td>
-                    <td>{{ traobject.category.label }}</td>
-                    <td>{{ traobject.city }}</td>
-                    <td>{{ traobject.county.label }}</td>
+                    <td>{{ traobjectFound.title }}</td>
+                    <td><img class="thumbnail" src="{{ asset('uploads/' ~ traobjectFound.picture)}}" alt="{{ traobjectFound.category.label }}"></td>
+                    <td>{{ traobjectFound.eventAt|date('d/m/Y') }}</td>
+                    <td>{{ traobjectFound.city }}</td>
+                    <td>{{ traobjectFound.category.label }}</td>
                     <td class="d-flex justify-content-between">
-                        <a class="btn btn-primary mr-3" href="{{ path('traobject_show', {'id': traobject.id}) }}">Voir</a>
+                        <a class="btn btn-primary mr-3" href="{{ path('traobject_show', {'id': traobjectFound.id}) }}">Voir</a>
                     </td>
                 </tr>
             {% else %}

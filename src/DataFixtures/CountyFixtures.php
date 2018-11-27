@@ -19,7 +19,7 @@ class CountyFixtures extends Fixture
         $this->addReference('county-iev', $iev);
 
         $morbihan = new County();
-        $morbihan->setLabel('orbihan');
+        $morbihan->setLabel('Morbihan');
         $morbihan->setZipcode('56');
         $manager->persist($morbihan);
         $this->addReference('county-morbihan', $morbihan);

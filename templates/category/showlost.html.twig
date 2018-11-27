@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des objets perdus{% endblock %}
+{% block title %}Liste des {{ category.label }} perdus{% endblock %}
 {% block recherche %}
     {% include 'default/header.html.twig' %}
 {% endblock %}
 {% block body %}
     <div class="container mt-5">
-        <h1>Liste des objets perdus</h1>
+        <h1>Liste des {{ category.label }} perdus</h1>
 
         <table class="table">
             <thead>
@@ -14,23 +14,21 @@
                 <th>Titre</th>
                 <th>Image</th>
                 <th>Perdu le</th>
-                <th>Catégorie</th>
                 <th>Ville</th>
                 <th>Département</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for traobject in traobjects %}
+            {% for traobjectLost in traobjectLosts %}
                 <tr>
-                    <td>{{ traobject.title }}</td>
-                    <td><img class="thumbnail" src="{{ asset('uploads/' ~ traobject.picture)}}" alt="{{ traobject.category.label }}"></td>
-                    <td>{{ traobject.eventAt|date('d/m/Y') }}</td>
-                    <td>{{ traobject.category.label }}</td>
-                    <td>{{ traobject.city }}</td>
-                    <td>{{ traobject.county.label }}</td>
+                    <td>{{ traobjectLost.title }}</td>
+                    <td><img class="thumbnail" src="{{ asset('uploads/' ~ traobjectLost.picture)}}" alt="{{ traobjectLost.category.label }}"></td>
+                    <td>{{ traobjectLost.eventAt|date('d/m/Y') }}</td>
+                    <td>{{ traobjectLost.city }}</td>
+                    <td>{{ traobjectLost.county.label }}</td>
                     <td class="d-flex justify-content-between">
-                        <a class="btn btn-primary mr-3" href="{{ path('traobject_show', {'id': traobject.id}) }}">Voir</a>
+                        <a class="btn btn-primary mr-3" href="{{ path('traobject_show', {'id': traobjectLost.id}) }}">Voir</a>
                     </td>
                 </tr>
             {% else %}

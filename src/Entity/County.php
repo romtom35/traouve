@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,6 +35,12 @@ class County
      * @ORM\Column(name="zipcode", type="integer", nullable=false)
      */
     private $zipcode;
+
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="App\Entity\Traobject", mappedBy="county")
+     */
+    private $traobject;
 
     /**
      * @return int
@@ -76,6 +83,24 @@ class County
     public function setZipcode(int $zipcode): County
     {
         $this->zipcode = $zipcode;
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTraobject(): Collection
+    {
+        return $this->traobject;
+    }
+
+    /**
+     * @param Collection $traobject
+     * @return County
+     */
+    public function setTraobject(Collection $traobject): County
+    {
+        $this->traobject = $traobject;
         return $this;
     }
 

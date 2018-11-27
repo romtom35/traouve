@@ -15,7 +15,7 @@ class TraobjectPixtures extends Fixture implements DependentFixtureInterface
         $bear = new Traobject();
         $bear->setTitle('Ours en peluche');
         $bear->setPicture('teddy-bear.jpg');
-        $bear->setCity('rennes');
+        $bear->setCity('Rennes');
         $bear->setEventAt(new \DateTime('2018-11-20'));
         $bear->setCategory($this->getReference('category-jouet'));
         $bear->setState($this->getReference('state-trouve'));
@@ -26,7 +26,7 @@ class TraobjectPixtures extends Fixture implements DependentFixtureInterface
         $wallet = new Traobject();
         $wallet->setTitle('portefeuille');
         $wallet->setPicture('wallet.jpg');
-        $wallet->setCity('saint-malo');
+        $wallet->setCity('Saint-Malo');
         $wallet->setEventAt(new \DateTime('2018-11-21'));
         $wallet->setCategory($this->getReference('category-portefeuille'));
         $wallet->setState($this->getReference('state-perdu'));
@@ -35,9 +35,9 @@ class TraobjectPixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($wallet);
 
         $key = new Traobject();
-        $key->setTitle('trousseau de clés');
+        $key->setTitle('Trousseau de clés');
         $key->setPicture('keys.jpg');
-        $key->setCity('vannes');
+        $key->setCity('Vannes');
         $key->setEventAt(new \DateTime('2018-11-24'));
         $key->setCategory($this->getReference('category-cles'));
         $key->setState($this->getReference('state-perdu'));

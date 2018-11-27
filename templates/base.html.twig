@@ -55,13 +55,8 @@
                         {{ render(controller('App\\Controller\\CategoryController::footerList')) }}
                     </div>
                     <div class="col-6 col-md">
-                        <h5>Villes</h5>
-                        <ul class="list-unstyled text-small">
-                            <li><a class="text-muted" href="#">Rennes</a></li>
-                            <li><a class="text-muted" href="#">Brest</a></li>
-                            <li><a class="text-muted" href="#">Vannes</a></li>
-                            <li><a class="text-muted" href="#">St Malo</a></li>
-                        </ul>
+                        <h5>Départements</h5>
+                        {{ render(controller('App\\Controller\\CountyController::footerList')) }}
                     </div>
                     <div class="col-6 col-md">
                         <h5>Notre entreprise</h5>

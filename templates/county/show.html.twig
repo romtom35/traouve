@@ -1,30 +1,37 @@
 {% extends "base.html.twig" %}
+{% block title %}{{ county.label }}{% endblock %}
 {% block recherche %}
     {% include 'default/header.html.twig' %}
 {% endblock %}
 {% block body %}
-
     <div class="container">
-        <h2>Les derniers objets trouvés</h2>
+        <h1>Département : {{ county.label }}</h1>
+        <h2>Les derniers objets perdus :</h2>
         <section class="row">
             {% for traobjectLost in traobjectLosts %}
                 <article class="col-md-3">
                     {% include 'traobject/card.html.twig' with {'traobject': traobjectLost} only %}
                 </article>
+            {% else %}
+                <p>Aucun objet perdu</p>
             {% endfor %}
-            <a href="{{ path('traobjects_lost') }}">Voir tous les objets perdus</a>
+            {% if traobjectLosts %}
+                <a href="{{ path('county_show_lost', {'id':county.id}) }}">Voir tous les objets perdus du département</a>
+            {% endif %}
         </section>
-    </div>
-
-    <div class="container">
-        <h2>Les derniers objets perdus</h2>
+        <h2>Les derniers objets trouvés :</h2>
         <section class="row">
             {% for traobjectFound in traobjectFounds %}
                 <article class="col-md-3">
                     {% include 'traobject/card.html.twig' with {'traobject': traobjectFound} only %}
                 </article>
+            {% else %}
+                <p>Aucun objet trouvé</p>
             {% endfor %}
-            <a href="{{ path('traobjects_found') }}">Voir tous les objets trouvés</a>
+            {% if traobjectFounds %}
+                <a href="{{ path('county_show_found', {'id':county.id}) }}">Voir tous les objets trouvés du département</a>
+            {% endif %}
         </section>
     </div>
+
 {% endblock %}
