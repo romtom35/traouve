@@ -7,9 +7,9 @@
     <div class="container">
         <h2>Les derniers objets trouvés</h2>
         <section class="row">
-            {% for traobject in traobjects if traobject.state.label == 'Trouvé' %}
+            {% for traobjectLost in traobjectLosts %}
                 <article class="col-md-3">
-                    {% include 'traobject/card.html.twig' with {'traobject': traobject} only %}
+                    {% include 'traobject/card.html.twig' with {'traobject': traobjectLost} only %}
                 </article>
             {% endfor %}
 
@@ -19,9 +19,9 @@
     <div class="container">
         <h2>Les derniers objets perdus</h2>
         <section class="row">
-            {% for traobject in traobjects if traobject.state.label == 'Perdu' %}
+            {% for traobjectFound in traobjectFounds %}
                 <article class="col-md-3">
-                    {% include 'traobject/card.html.twig' with {'traobject': traobject} only %}
+                    {% include 'traobject/card.html.twig' with {'traobject': traobjectFound} only %}
                 </article>
             {% endfor %}
         </section>

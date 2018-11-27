@@ -1,0 +1,64 @@
+{% extends "base.html.twig" %}
+{% block recherche %}
+    {% include 'default/header.html.twig' %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="card object-card">
+            <h1 class="card-header">
+                <span class="badge badge-primary badge-found">
+                    <i class="fa fa-map-pin"></i>
+                    {{ traobject.state.label }}
+                </span>
+                {{ traobject.title }}
+            </h1>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{ asset('uploads/' ~ traobject.picture) }}" class="img-thumbnail" alt="{{ traobject.category.label }}">
+                    </div>
+                    <div class="col-md-8">
+                        <p>{{ traobject.description }}</p>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <ul class="object-features">
+                    <li><a href="#" class="badge" style="background-color: {{ traobject.category.color }};"><i class="fa {{ traobject.category.icon }}"></i> {{ traobject.category.label }}</a></li>
+                    <li><a href="#" class="badge badge-info"><i class="fa fa-calendar"></i> {{ traobject.eventAt|date('d m Y') }}</a></li>
+                    <li><a href="#" class="badge badge-info"><i class="fa fa-map-marker"></i> {{ traobject.city }}</a></li>
+                </ul>
+            </footer>
+        </div>
+
+        <hr>
+
+        <h3>Commentaires</h3>
+
+        <div class="alert alert-secondary" role="alert">
+            <p>Veuillez vous connecter afin de pouvoir laisser un commentaire</p>
+            <a href="login.html" class="btn btn-primary">
+                <i class="fa fa-sign-in"></i>
+                Me connecter
+            </a>
+        </div>
+
+        <ul class="list-unstyled">
+            <li class="media mb-1">
+                <img class="mr-3" src="../public/uploads/user-2.jpg" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-0 mb-1">Jane Doe</h5>
+                    <p>Pourriez-vous préciser l'heure à laquelle vous l'avez perdu svp ? Il me semble avoir vu une personne le ramasser vers 17h30.</p>
+                </div>
+            </li>
+            <li class="media mb-1">
+                <img class="mr-3" src="../public/uploads/user-1.jpg" alt="John Doe">
+                <div class="media-body">
+                    <h5 class="mt-0 mb-1">John Doe</h5>
+                    <p>Bonjour, je pense avoir trouvé votre portefeuille ce matin. Pourriez-vous m'envoyer votre nom et prénom par message privé svp afin que je puisse vous le remettre ?</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\State;
 use App\Entity\Traobject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,16 @@ class DefaultController extends BaseController
      */
     public function homepage()
     {
-        $traobjects = $this->getDoctrine()->getRepository(Traobject::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findBY([], ['label' => 'ASC']);
+        $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
+        $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
+        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectByState($stateLost, 4);
+        $traobjectfounds = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectByState($stateFound, 4);
         return $this->render('default/homepage.html.twig', [
-            'traobjects' => $traobjects
+            'traobjectLosts' => $traobjectLosts,
+            'traobjectFounds' => $traobjectfounds,
+            'categories' => $categories
+
         ]);
     }
 }

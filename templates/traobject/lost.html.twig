@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+{% block recherche %}
+    {% include 'default/header.html.twig' %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h2>Les objets perdus</h2>
+        <section class="row">
+            {% for traobject in traobjects %}
+                <article class="col-md-3">
+                    {% include 'traobject/card.html.twig' with {'traobject': traobject} only %}
+                </article>
+            {% endfor %}
+        </section>
+    </div>
+{% endblock %}

@@ -9,5 +9,5 @@
             <li><a href="#" class="badge badge-info"><i class="fa fa-map-marker"></i> {{ traobject.city }}</a></li>
         </ul>
     </div>
-    <a href="object.html" class="card-footer-btn btn btn-primary"><i class="fa fa-eye"></i> Afficher</a>
+    <a href="{{ path('traobject_show',{'id':traobject.id}) }}" class="card-footer-btn btn btn-primary"><i class="fa fa-eye"></i> Afficher</a>
 </div>

@@ -16,13 +16,13 @@
           <i class="fa fa-square fa-stack-2x"></i>
           <i class="fa fa-search fa-stack-1x fa-inverse"></i>
         </span>
-                Traoùvé
+                <a href="{{ path('homepage') }}">Traoùvé</a>
             </h5>
             <nav class="my-2 my-md-0 mr-md-3">
-                <a class="p-2 text-dark" href="index.html">Accueil</a>
+                <a class="p-2 text-dark" href="{{ path('homepage') }}">Accueil</a>
                 <a class="p-2 text-dark" href="#">Déposer une annonce</a>
-                <a class="p-2 text-dark" href="list-lost.html">Objets perdus</a>
-                <a class="p-2 text-dark" href="list-found.html">Objets trouvés</a>
+                <a class="p-2 text-dark" href="{{ path('traobjects_lost') }}">Objets perdus</a>
+                <a class="p-2 text-dark" href="{{ path('traobjects_found') }}">Objets trouvés</a>
             </nav>
             <a class="btn btn-outline-primary" href="register.html">
                 <i class="fa fa-user-plus"></i>
@@ -30,9 +30,12 @@
             </a>
         </div>
     {% endblock %}
+    <main class="main-content">
     {% block recherche %}{% endblock %}
 
     {% block body %}{% endblock %}
+
+    </main>
     {% block footer %}
         <div class="container">
             <footer class="pt-4 my-md-5 pt-md-5 border-top">
@@ -49,14 +52,7 @@
                     </div>
                     <div class="col-6 col-md">
                         <h5>Catégories</h5>
-                        <ul class="list-unstyled text-small">
-                            <li><a class="text-muted" href="#">Clés</a></li>
-                            <li><a class="text-muted" href="#">Portefeuille</a></li>
-                            <li><a class="text-muted" href="#">Jouet</a></li>
-                            <li><a class="text-muted" href="#">Animaux</a></li>
-                            <li><a class="text-muted" href="#">Electroniques</a></li>
-                            <li><a class="text-muted" href="#">Vêtements</a></li>
-                        </ul>
+                        {{ render(controller('App\\Controller\\CategoryController::footerList')) }}
                     </div>
                     <div class="col-6 col-md">
                         <h5>Villes</h5>
