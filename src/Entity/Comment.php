@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Comment
  *
  * @ORM\Table(name="comment", indexes={@ORM\Index(name="fk_comment_user1_idx", columns={"user_id"}), @ORM\Index(name="fk_comment_traobject1_idx", columns={"traobject_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Comment
@@ -39,7 +39,7 @@ class Comment
     /**
      * @var Traobject
      *
-     * @ORM\ManyToOne(targetEntity="Traobject")
+     * @ORM\ManyToOne(targetEntity="Traobject", inversedBy="comment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="traobject_id", referencedColumnName="id")
      * })
@@ -55,6 +55,7 @@ class Comment
      * })
      */
     private $user;
+
 
     /**
      * @ORM\PrePersist

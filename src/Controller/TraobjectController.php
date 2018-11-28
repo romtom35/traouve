@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Comment;
 use App\Entity\State;
 use App\Entity\Traobject;
 use App\Form\TraobjectType;
@@ -26,8 +27,10 @@ class TraobjectController extends BaseController
      */
     public function show(Traobject $traobject)
     {
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findLast(10);
         return $this->render('traobject/show.html.twig', [
-            'traobject' => $traobject
+            'traobject' => $traobject,
+            'comments' => $comments
         ]);
     }
 

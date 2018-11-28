@@ -3,8 +3,7 @@
 {% block title %}Déposer une annonce{% endblock %}
 
 {% block body %}
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-
+    {% if app.user %}
 
     <div class="container mb-4">
     <h1>Déposer une annonce</h1>

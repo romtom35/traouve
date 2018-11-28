@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -91,7 +92,7 @@ class Traobject
     /**
      * @var Category
      *
-     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="traobject")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      * })
@@ -101,7 +102,7 @@ class Traobject
     /**
      * @var County
      *
-     * @ORM\ManyToOne(targetEntity="County")
+     * @ORM\ManyToOne(targetEntity="County", inversedBy="traobject")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="county_id", referencedColumnName="id")
      * })
@@ -129,6 +130,12 @@ class Traobject
     private $user;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="traobject")
+     */
+    private $comment;
+
+    /**
      * @ORM\PrePersist
      */
     public function setCreatedAtValue()
@@ -141,6 +148,24 @@ class Traobject
     public function setUpdatedAtValue()
     {
         $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getComment(): ?Collection
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param Collection $comment
+     * @return Traobject
+     */
+    public function setComment(Collection $comment): Traobject
+    {
+        $this->comment = $comment;
+        return $this;
     }
 
     /**
