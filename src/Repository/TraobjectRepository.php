@@ -73,4 +73,5 @@ class TraobjectRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 }
