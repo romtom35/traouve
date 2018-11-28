@@ -1,5 +1,6 @@
-
 {{ form_start(form) }}
     {{ form_widget(form) }}
-<button class="btn btn-success">{{ button_label|default('Déposer mon annonce') }}</button>
+
+    <input type="hidden" name="state_id" value="{{ state.id }}">
+    <button class="btn btn-success">{{ button_label|default('Déposer mon annonce') }}</button>
 {{ form_end(form) }}

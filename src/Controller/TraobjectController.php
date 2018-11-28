@@ -8,6 +8,7 @@ use App\Entity\State;
 use App\Entity\Traobject;
 use App\Form\TraobjectType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,24 +39,28 @@ class TraobjectController extends BaseController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/lost", name="traobjects_lost")
      */
-    public function showLost(){
+    public function showLost()
+    {
         $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
         $traobjects = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(4, null, $stateLost);
         return $this->render('traobject/lost.html.twig', [
             'traobjects' => $traobjects
         ]);
     }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/found", name="traobjects_found")
      */
-    public function showFound(){
+    public function showFound()
+    {
         $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
         $traobjects = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(4, null, $stateFound);
         return $this->render('traobject/found.html.twig', [
             'traobjects' => $traobjects
         ]);
     }
+
     /**
      * @Route("/new", name="traobject_new", methods="GET|POST")
      */
@@ -67,38 +72,50 @@ class TraobjectController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $file */
-            $file = $traobject->getPicture();
+            $file = new File($traobject->getPicture());
 
-            if(!$file){
+            if (!$file) {
 
-            }else{
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+            } else {
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
 
 
-            // Move the file to the directory where brochures are stored
-            try {
-                $file->move(
-                    $this->getParameter('pictures_directory'),
-                    $fileName
-                );
-            } catch (FileException $e) {
+                // Move the file to the directory where brochures are stored
+                try {
+                    $file->move(
+                        $this->getParameter('pictures_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                }
+
+                $traobject->setPicture($fileName);
             }
 
-            $traobject->setPicture($fileName);
-            }
             $em = $this->getDoctrine()->getManager();
+
             $traobject->setUser($this->getUser());
+            $state = $this->getDoctrine()->getRepository(State::class)->find($request->get('state_id'));
+            $traobject->setState($state);
+
             $em->persist($traobject);
             $em->flush();
 
             return $this->redirectToRoute('homepage');
         }
 
+        $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
+        $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
+
         return $this->render('traobject/new.html.twig', [
             'traobject' => $traobject,
-            'form' => $form->createView(),
+            'formFound' => $form->createView(),
+            'formLost' => $form->createView(),
+            'stateFound' => $stateFound,
+            'stateLost' => $stateLost,
         ]);
     }
+
     /**
      * @return string
      */

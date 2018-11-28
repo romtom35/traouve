@@ -32,11 +32,9 @@ class Traobject
     private $title;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="picture", type="string", length=255, nullable=true)
      * @Assert\NotBlank(message="Merci de mettre une image avec le bon format - jpg, jpeg, png ou gif")
-     * @Assert\File(mimeTypes={ "image/jpg" })
+     * @Assert\File(mimeTypes={ "image/jpg", "image/jpeg" , "image/png", "image/gif"   })
      */
     private $picture;
 
@@ -194,10 +192,7 @@ class Traobject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPicture(): ?string
+    public function getPicture()
     {
         return $this->picture;
     }

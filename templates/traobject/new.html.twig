@@ -20,14 +20,12 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="found" role="tabpanel" aria-labelledby="found-tab">
                 <h2>J'ai trouvé un objet</h2>
-
-                {{ include('traobject/_form.html.twig') }}
+                {% include 'traobject/_form.html.twig' with {'form': formFound, 'state': stateFound} only %}
             </div>
 
             <div class="tab-pane fade" id="lost" role="tabpanel" aria-labelledby="lost-tab">
                 <h2>J'ai perdu un objet</h2>
-
-                {{ include('traobject/_form.html.twig') }}
+                {% include 'traobject/_form.html.twig' with {'form': formLost, 'state': stateLost} only %}
             </div>
         </div>
     </div>
