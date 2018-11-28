@@ -22,8 +22,8 @@ class CategoryController extends BaseController
     {
         $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
         $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
-        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCategory($category, $stateLost, 4);
-        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCategory($category, $stateFound, 4);
+        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(4, $category, $stateLost);
+        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(4, $category, $stateFound);
         return $this->render('category/show.html.twig', [
             'category' => $category,
             'traobjectLosts' => $traobjectLosts,
@@ -36,7 +36,7 @@ class CategoryController extends BaseController
     public function showLost(Category $category)
     {
         $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
-        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCategory($category, $stateLost, 99);
+        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(99, $category, $stateLost);
         return $this->render('category/showlost.html.twig', [
             'category' => $category,
             'traobjectLosts' => $traobjectLosts
@@ -48,7 +48,7 @@ class CategoryController extends BaseController
     public function showFound(Category $category)
     {
         $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
-        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCategory($category, $stateFound, 99);
+        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(99, $category, $stateFound);
         return $this->render('category/showfound.html.twig', [
             'category' => $category,
             'traobjectFounds' => $traobjectFounds

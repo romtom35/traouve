@@ -18,60 +18,32 @@ class TraobjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Traobject::class);
     }
 
-    public function findLastTraobjectByState(State $state, int $limit): array
+    public function findLastTraobjectBy(int $limit, Category $category = null, State $state = null , County $county = null ): array
     {
         $qb = $this->createQueryBuilder('t');
 
         $qb = $qb->select('t', 'c', 's')
             ->innerJoin('t.category', 'c')
             ->innerJoin('t.state', 's')
-            ->where($qb->expr()->eq('s.id', ':state'))
-            ->orderBy('t.createdAt', 'DESC');
+            ->innerJoin('t.county', 'co');
 
-
-        return $qb->setParameter(':state', $state->getId())
-            ->setMaxResults($limit)
+        if ($state != null) {
+            $qb = $qb->andWhere($qb->expr()->eq('s.id', ':state'))
+                ->setParameter(':state', $state->getId());
+        }
+        if ($category != null) {
+            $qb = $qb->andWhere($qb->expr()->eq('c.id', ':category'))
+                ->setParameter(':category', $category->getId());
+        }
+        if ($county != null) {
+            $qb = $qb->andWhere($qb->expr()->eq('co.id', ':county'))
+                ->setParameter(':county', $county->getId());
+        }
+        $qb = $qb->orderBy('t.createdAt', 'DESC');
+        return $qb->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }
 
-    public function findTraobjectByCategory(Category $category, State $state, int $limit): array
-    {
-        $qb = $this->createQueryBuilder('t');
-
-        $qb = $qb->select('t', 'c', 's')
-            ->innerJoin('t.category', 'c')
-            ->innerJoin('t.state', 's')
-            ->innerJoin('t.county', 'co')
-            ->where($qb->expr()->eq('s.id', ':state'))
-            ->andwhere($qb->expr()->eq('c.id', ':category'))
-            ->orderBy('t.createdAt', 'DESC');
-
-
-        return $qb->setParameter(':state', $state->getId())
-            ->setParameter(':category', $category->getId())
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
-    public function findTraobjectByCounty(County $county, State $state, int $limit): array
-    {
-        $qb = $this->createQueryBuilder('t');
-
-        $qb = $qb->select('t', 'c', 's')
-            ->innerJoin('t.category', 'c')
-            ->innerJoin('t.state', 's')
-            ->innerJoin('t.county', 'co')
-            ->where($qb->expr()->eq('s.id', ':state'))
-            ->andwhere($qb->expr()->eq('co.id', ':county'))
-            ->orderBy('t.createdAt', 'DESC');
-
-
-        return $qb->setParameter(':state', $state->getId())
-            ->setParameter(':county', $county->getId())
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
 
 }

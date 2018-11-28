@@ -23,8 +23,8 @@ class CountyController extends BaseController
     {
         $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
         $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
-        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCounty($county, $stateLost, 4);
-        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCounty($county, $stateFound, 4);
+        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(4, null, $stateLost, $county);
+        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(4, null, $stateFound, $county);
         return $this->render('county/show.html.twig', [
             'county' => $county,
             'traobjectLosts' => $traobjectLosts,
@@ -37,7 +37,7 @@ class CountyController extends BaseController
     public function showLost(County $county)
     {
         $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
-        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCounty($county, $stateLost, 99);
+        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(99, null, $stateLost, $county);
         return $this->render('county/showlost.html.twig', [
             'county' => $county,
             'traobjectLosts' => $traobjectLosts
@@ -49,7 +49,7 @@ class CountyController extends BaseController
     public function showFound(County $county)
     {
         $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
-        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findTraobjectByCounty($county, $stateFound, 99);
+        $traobjectFounds = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(99, null, $stateFound, $county);
         return $this->render('county/showfound.html.twig', [
             'county' => $county,
             'traobjectFounds' => $traobjectFounds

@@ -23,6 +23,12 @@
                 <a class="p-2 text-dark" href="{{ path('traobject_new') }}">Déposer une annonce</a>
                 <a class="p-2 text-dark" href="{{ path('traobjects_lost') }}">Objets perdus</a>
                 <a class="p-2 text-dark" href="{{ path('traobjects_found') }}">Objets trouvés</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="#" class="p-2 text-dark">
+                        Administration
+                    </a>
+
+                {% endif %}
             </nav>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">

@@ -8,7 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class TraobjectPixtures extends Fixture implements DependentFixtureInterface
+class TraobjectFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -21,6 +21,7 @@ class TraobjectPixtures extends Fixture implements DependentFixtureInterface
         $bear->setState($this->getReference('state-trouve'));
         $bear->setCounty($this->getReference('county-iev'));
         $bear->setUser($this->getReference('user-2'));
+        $this->addReference('traobject-bear', $bear);
         $manager->persist($bear);
 
         $wallet = new Traobject();

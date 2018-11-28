@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Traobject
@@ -33,6 +34,8 @@ class Traobject
      * @var string|null
      *
      * @ORM\Column(name="picture", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Merci de mettre une image avec le bon format - jpg, jpeg, png ou gif")
+     * @Assert\File(mimeTypes={ "image/jpg" })
      */
     private $picture;
 

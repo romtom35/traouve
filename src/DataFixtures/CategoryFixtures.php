@@ -42,7 +42,7 @@ class CategoryFixtures extends Fixture
 
         $lunette = new Category();
         $lunette->setLabel('Lunettes');
-        $lunette->setIcon('fa-glasses');
+        $lunette->setIcon('fa-eye');
         $lunette->setColor('#7c04f4');
         $manager->persist($lunette);
         $this->addReference('category-lunette', $lunette);

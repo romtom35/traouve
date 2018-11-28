@@ -23,8 +23,8 @@ class DefaultController extends BaseController
         $categories = $this->getDoctrine()->getRepository(Category::class)->findBY([], ['label' => 'ASC']);
         $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
         $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
-        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectByState($stateLost, 4);
-        $traobjectfounds = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectByState($stateFound, 4);
+        $traobjectLosts = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(4, null, $stateLost);
+        $traobjectfounds = $this->getDoctrine()->getRepository(Traobject::class)->findLastTraobjectBy(4, null, $stateFound);
         return $this->render('default/homepage.html.twig', [
             'traobjectLosts' => $traobjectLosts,
             'traobjectFounds' => $traobjectfounds,
