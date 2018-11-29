@@ -1,0 +1,38 @@
+easy_admin:
+    site_name: 'Traoùvé'
+    design:
+        brand_color: '#EB6864'
+    list:
+        title: 'Liste des %%entity_label%%s'
+    entities:
+        Traobject:
+            class: App\Entity\Traobject
+            label: Troabject
+            list:
+                fields: [ 'id',
+                          { property: 'title', label: 'Titre' },
+                          { property: 'picture', type: 'image', label: 'Image', base_path: '%app.path.uploads_dir%' },
+                          { property: 'state.label', label: 'Statut' },
+                          { property: 'city', label: 'Ville' },
+                          { property: 'createdAt', label: 'Déposé le', format: 'd/m/Y H:i' },
+                          { property: 'user.email', label: 'Déposé par', type: 'email' }]
+        Category:
+            class: App\Entity\Category
+            label: Catégorie
+            list:
+                fields: [ 'id',
+                          { property: 'label', label: 'Libellé' },
+                          { property: 'icon', label: 'Icône' },
+                          { property: 'color', label: 'Couleur' }]
+        User:
+            class: App\Entity\User
+            label: Utilisateur
+            list:
+                fields: [ 'id',
+                          { property: 'roles', label: 'Role' },
+                          { property: 'lastname', label: 'Nom' },
+                          { property: 'Firstname', label: 'Prénom' },
+                          { property: 'picture', type: 'image', label: 'Photo', base_path: '%app.path.uploads_dir%' },
+                          { property: 'email', label: 'Email', type: 'email' },
+                          { property: 'phone', label: 'Téléphone', type: 'tel' }]
+
