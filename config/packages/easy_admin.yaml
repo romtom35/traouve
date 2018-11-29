@@ -42,3 +42,11 @@ easy_admin:
                           { property: 'email', label: 'Email', type: 'email' },
                           { property: 'phone', label: 'Téléphone', type: 'tel' }]
 
+        Comment:
+            class: App\Entity\Comment
+            label: Commentaire
+            list:
+                fields: [ 'id',
+                          { property: 'Content', label: 'Contenu' },
+                          { property: 'createdAt', label: 'Déposé le', format: 'd/m/Y H:i' },
+                          { property: 'user.email', label: 'Déposé par', type: 'email' }]

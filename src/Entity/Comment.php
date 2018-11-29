@@ -68,7 +68,7 @@ class Comment
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -94,7 +94,7 @@ class Comment
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -112,7 +112,7 @@ class Comment
     /**
      * @return Traobject
      */
-    public function getTraobject(): Traobject
+    public function getTraobject(): ?Traobject
     {
         return $this->traobject;
     }
@@ -130,7 +130,7 @@ class Comment
     /**
      * @return User
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
