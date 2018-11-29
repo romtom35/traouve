@@ -60,6 +60,10 @@
                 </li>
             {% endfor %}
         </ul>
+        {% if app.user %}
+            <h2>Laisser un message</h2>
+            {{  render(controller('App\\Controller\\CommentController:new', {'id' : traobject.id }))}}
+        {% endif %}
     </div>
 {% endblock %}
 

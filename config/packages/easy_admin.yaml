@@ -17,8 +17,11 @@ easy_admin:
                           { property: 'createdAt', label: 'Déposé le', format: 'd/m/Y H:i' },
                           { property: 'user.email', label: 'Déposé par', type: 'email' }]
             form:
-                fields:
-                    - { property: 'pictureFile', type: 'file' }
+                fields: [{ property: 'title', label: 'Titre' },
+                         { property: 'pictureFile', type: 'vich_image' },
+                         { property: 'city', label: 'Ville' },
+                         { property: 'createdAt', label: 'Déposé le', format: 'd/m/Y H:i' }]
+
         Category:
             class: App\Entity\Category
             label: Catégorie

@@ -28,26 +28,7 @@ class UserController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $file */
-            $file = new File($user->getPicture());
 
-            if (!$file) {
-
-            } else {
-                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $file->move(
-                        $this->getParameter('pictures_directory'),
-                        $fileName
-                    );
-                } catch (FileException $e) {
-                }
-
-                $user->setPicture($fileName);
-            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

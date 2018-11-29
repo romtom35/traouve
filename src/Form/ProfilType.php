@@ -3,11 +3,11 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ProfilType extends AbstractType
 {
@@ -23,9 +23,8 @@ class ProfilType extends AbstractType
                 'attr' => ['placeholder' => 'Nom']
             ])
             ->add('email', EmailType::class, ['attr' => ['placeholder' => 'Email']])
-            ->add('picture', FileType::class, [
+            ->add('pictureFile', VichImageType::class, [
                 'label' => 'Image',
-                'data_class' => null,
                 'required' => false
             ])
             ->add('phone', TextType::class, [

@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Traobject
@@ -13,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="traobject", indexes={@ORM\Index(name="fk_traobject_category_idx", columns={"category_id"}), @ORM\Index(name="fk_traobject_state1_idx", columns={"state_id"}), @ORM\Index(name="fk_traobject_user1_idx", columns={"user_id"}), @ORM\Index(name="fk_traobject_county1_idx", columns={"county_id"})})
  * @ORM\Entity(repositoryClass="App\Repository\TraobjectRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class Traobject
 {
@@ -34,12 +36,11 @@ class Traobject
 
     /**
      * @ORM\Column(name="picture", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Merci de mettre une image avec le bon format - jpg, jpeg, png ou gif")
-     * @Assert\File(mimeTypes={ "image/jpg", "image/jpeg" , "image/png", "image/gif"   })
      */
     private $picture;
 
     /**
+     * @Vich\UploadableField(mapping="traobject_pictures", fileNameProperty="picture")
      * @var File
      */
     private $pictureFile;
@@ -198,7 +199,10 @@ class Traobject
         return $this;
     }
 
-    public function getPicture()
+    /**
+     * @return null|string
+     */
+    public function getPicture(): ?string
     {
         return $this->picture;
     }
@@ -214,7 +218,7 @@ class Traobject
     }
 
     /**
-     * @return File
+     * @return null|File
      */
     public function getPictureFile(): ?File
     {
@@ -222,11 +226,15 @@ class Traobject
     }
 
     /**
-     * @param File $pictureFile
+     * @param File $picture
      */
-    public function setPictureFile(File $pictureFile): void
+    public function setPictureFile(File $picture = null)
     {
-        $this->pictureFile = $pictureFile;
+        $this->pictureFile = $picture;
+        if ($picture) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
     }
 
     /**

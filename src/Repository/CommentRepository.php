@@ -4,6 +4,7 @@ namespace App\Repository;
 
 
 use App\Entity\Comment;
+use App\Entity\Traobject;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -15,16 +16,16 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    public function findLast(int $limit): array
+    public function findByTraobject(Traobject $traobject): array
     {
         $qb = $this->createQueryBuilder('c');
 
         $qb = $qb->select('c', 't', 'u')
             ->innerJoin('c.traobject', 't')
             ->innerJoin('c.user', 'u')
-            ->orderBy('c.createdAt', 'DESC')
-            ->setMaxResults($limit);
+            ->where($qb->expr()->eq('t.id', ':traobject'))
+            ->orderBy('c.createdAt', 'DESC');
 
-        return $qb->getQuery()->getResult();
+        return $qb->setParameter(':traobject', $traobject->getId())->getQuery()->getResult();
     }
 }
