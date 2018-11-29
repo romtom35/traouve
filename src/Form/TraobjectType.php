@@ -26,7 +26,11 @@ class TraobjectType extends AbstractType
                     'placeholder' => 'Titre'
                 ]
             ])
-            ->add('picture', FileType::class, ['label' => 'Image', 'required' => false])
+            ->add('picture', FileType::class, [
+                'label' => 'Image',
+                'data_class' => null,
+                'required' => false
+            ])
             ->add('category', EntityType::class, ['class' => Category::class, 'placeholder' => 'Choisissez une catégorie', 'label' => 'Catégories : '])
             ->add('description', TextareaType::class, ['label' => 'Description', 'required' => false])
             ->add('eventAt', DateTimeType::class, ['label' => 'Date de l\'évènement : '])

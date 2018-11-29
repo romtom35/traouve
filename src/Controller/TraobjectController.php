@@ -115,6 +115,104 @@ class TraobjectController extends BaseController
             'stateLost' => $stateLost,
         ]);
     }
+    /**
+     * @Route("/newlost", name="traobject_new_lost", methods="GET|POST")
+     */
+    public function newLost(Request $request): Response
+    {
+        $traobject = new traobject();
+        $form = $this->createForm(TraobjectType::class, $traobject);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = new File($traobject->getPicture());
+
+            if (!$file) {
+
+            } else {
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $file->move(
+                        $this->getParameter('pictures_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                }
+
+                $traobject->setPicture($fileName);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+
+            $traobject->setUser($this->getUser());
+            $state = $this->getDoctrine()->getRepository(State::class)->find($request->get('state_id'));
+            $traobject->setState($state);
+
+            $em->persist($traobject);
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+        $stateLost = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::LOST]);
+        return $this->render('traobject/newlost.html.twig', [
+            'traobject' => $traobject,
+            'form' => $form->createView(),
+            'stateLost' => $stateLost,
+        ]);
+    }
+    /**
+     * @Route("/newFound", name="traobject_new_found", methods="GET|POST")
+     */
+    public function newFound(Request $request): Response
+    {
+        $traobject = new traobject();
+        $form = $this->createForm(TraobjectType::class, $traobject);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = new File($traobject->getPicture());
+
+            if (!$file) {
+
+            } else {
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $file->move(
+                        $this->getParameter('pictures_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                }
+
+                $traobject->setPicture($fileName);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+
+            $traobject->setUser($this->getUser());
+            $state = $this->getDoctrine()->getRepository(State::class)->find($request->get('state_id'));
+            $traobject->setState($state);
+
+            $em->persist($traobject);
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+        $stateFound = $this->getDoctrine()->getRepository(State::class)->findOneBy(["label" => State::FOUND]);
+        return $this->render('traobject/newfound.html.twig', [
+            'traobject' => $traobject,
+            'form' => $form->createView(),
+            'stateFound' => $stateFound,
+        ]);
+    }
 
     /**
      * @return string

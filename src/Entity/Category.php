@@ -52,7 +52,7 @@ class Category
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -60,7 +60,7 @@ class Category
     /**
      * @return string
      */
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->label;
     }
@@ -78,7 +78,7 @@ class Category
     /**
      * @return string
      */
-    public function getIcon(): string
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
@@ -96,7 +96,7 @@ class Category
     /**
      * @return string
      */
-    public function getColor(): string
+    public function getColor(): ?string
     {
         return $this->color;
     }
@@ -114,7 +114,7 @@ class Category
     /**
      * @return Collection
      */
-    public function getTraobject(): Collection
+    public function getTraobject(): ?Collection
     {
         return $this->traobject;
     }

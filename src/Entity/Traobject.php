@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -37,6 +38,11 @@ class Traobject
      * @Assert\File(mimeTypes={ "image/jpg", "image/jpeg" , "image/png", "image/gif"   })
      */
     private $picture;
+
+    /**
+     * @var File
+     */
+    private $pictureFile;
 
     /**
      * @var string|null
@@ -169,7 +175,7 @@ class Traobject
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -205,6 +211,22 @@ class Traobject
     {
         $this->picture = $picture;
         return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+    /**
+     * @param File $pictureFile
+     */
+    public function setPictureFile(File $pictureFile): void
+    {
+        $this->pictureFile = $pictureFile;
     }
 
     /**
@@ -403,6 +425,11 @@ class Traobject
     {
         $this->user = $user;
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 
 
